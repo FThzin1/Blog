@@ -54,6 +54,7 @@ function App() {
   },[])
   return (
     <>
+      <main>
       <header>
         <h1><span>Code</span>lândia</h1>
         <div className="input-search">
@@ -92,6 +93,7 @@ function App() {
       </section>
       <footer>
       </footer>
+      </main>
     </>
   )
 }
