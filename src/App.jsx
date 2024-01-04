@@ -1,31 +1,20 @@
 import { useEffect, useState } from "react"
 import "./components/styles/root.scss"
+import useGetAllData  from './components/api/GetAll'
 function App() {
   const [blog, SetBlog] = useState([
-    {
-      id: 0,
-      data: "17 de ago, 2024",
-      title: "GitHub agora permite fazer login sem precisar de senha",
-      describe: "O GitHub anunciou nesta quarta-feira (12) o acesso a partir das passkeys, método de autenticação sem senhas. A novidade está disponível em uma versão beta pública e pode substituir a autenticação em dois fatores.",
-    },
-    {
-      id: 1,
-      data: "17 de ago, 2024",
-      title: "GitHub agora permite fazer login sem precisar de senha",
-      describe: "O GitHub anunciou nesta quarta-feira (12) o acesso a partir das passkeys, método de autenticação sem senhas. A novidade está disponível em uma versão beta pública e pode substituir a autenticação em dois fatores."
-    },
-    {
-      id: 2,
-      data: "17 de ago, 2024",
-      title: "GitHub agora permite fazer login sem precisar de senha",
-      describe: "O GitHub anunciou nesta quarta-feira (12) o acesso a partir das passkeys, método de autenticação sem senhas. A novidade está disponível em uma versão beta pública e pode substituir a autenticação em dois fatores."
-    }
+
   ])
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
+  const connection = useGetAllData();
+
+  useEffect(() => {
+    SetBlog(connection)
+  }, []);
 
   const handleLike = (id) => {
     const updatedBlog = [...blog];
@@ -39,19 +28,6 @@ function App() {
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  useEffect(() => {
-    const loadLikes = () => {
-      const updatedBlog = [...blog];
-      updatedBlog.forEach((post, v) => {
-        const index = blog.findIndex(blog => blog.id === post.id)
-        const active = localStorage.getItem(`active_${index}`);
-        updatedBlog[index].active = JSON.parse(active);
-      });
-      SetBlog(updatedBlog);
-    };
-  
-    loadLikes();
-  },[])
   return (
     <>
       <main>
